@@ -1,0 +1,75 @@
+body {
+    background-color: #262626;
+    color: #fff;
+}
+
+nav.navbar {
+    background-color: #333333;
+    border: none;
+}
+
+nav.navbar .container {
+    padding-top: 5px;
+}
+
+body.bookstore .nav-pills > li > a {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+body.bookstore .nav-pills > li.active > a {
+    border-bottom: 3px solid #2A6DD1;
+    border-radius: 0px;
+    background-color: inherit;
+}
+
+body.bookstore .nav > li > a:hover {
+    background-color: inherit;
+    border-bottom: 3px solid #6D8BB9;
+    border-radius: 0px;
+}
+
+body.bookstore .btn {
+    font-weight: bold;
+}
+
+body.bookstore .forms {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+}
+
+body.bookstore table {
+    color: #70747A;
+}
+
+body.bookstore table thead {
+    font-weight: bold;
+}
+
+body.bookstore table thead a.active,
+body.bookstore table thead a.hover {
+    text-decoration: none;
+}
+
+body.bookstore .form-control {
+    background-color: #70747A;
+    border: none;
+    color: #fff;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #515B6A;
+}
+
+.form-control:-moz-placeholder {
+    color: #515B6A;
+}
+
+.form-control::-moz-placeholder {
+    color: #515B6A;
+}
+
+.form-control:-ms-input-placeholder {
+    color: #515B6A;
+}

@@ -1,0 +1,91 @@
+<div ng-if="authenticated" ng-controller="users as users">
+    <div class="forms">
+        <form ng-submit="users.addUser()">
+            <div class="form-group">
+                <input required type="text" class="form-control" placeholder="Name" ng-model="users.newUser.name">
+                <input required type="text" class="form-control" placeholder="Surname" ng-model="users.newUser.surname">
+                <input required type="email" class="form-control" placeholder="Email" ng-model="users.newUser.email">
+                <input required type="text" class="form-control" placeholder="Login" ng-model="users.newUser.login">
+                <input required type="password" class="form-control" placeholder="Password"
+                       ng-model="users.newUser.password">
+
+                <button type="submit" class="btn btn-success">Add User</button>
+            </div>
+        </form>
+    </div>
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+                <input type="text" class="form-control" placeholder="Search" ng-model="users.searchFilter">
+
+            </div>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>
+                <a href="#/users" ng-click="users.sortType = 'name'; users.sortReverse = !users.sortReverse">
+                    Name
+                    <span ng-show="users.sortType == 'name' && !users.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="users.sortType == 'name' && users.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/users" ng-click="users.sortType = 'surname'; users.sortReverse = !users.sortReverse">
+                    Surname
+                    <span ng-show="users.sortType == 'surname' && !users.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="users.sortType == 'surname' && users.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/users" ng-click="users.sortType = 'login'; users.sortReverse = !users.sortReverse">
+                    Login
+                    <span ng-show="users.sortType == 'login' && !users.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="users.sortType == 'login' && users.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/users" ng-click="users.sortType = 'email'; users.sortReverse = !users.sortReverse">
+                    Login
+                    <span ng-show="users.sortType == 'email' && !users.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="users.sortType == 'email' && users.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/users" ng-click="users.sortType = 'createDate'; users.sortReverse = !users.sortReverse">
+                    Create Date
+                    <span ng-show="users.sortType == 'createDate' && !users.sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="users.sortType == 'createDate' && users.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/users" ng-click="users.sortType = 'enabled'; users.sortReverse = !users.sortReverse">
+                    Enabled
+                    <span ng-show="users.sortType == 'enabled' && !users.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="users.sortType == 'enabled' && users.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                Opcje
+            </td>
+        </tr>
+        </thead>
+        <tr ng-repeat="user in users.users | orderBy:users.sortType:users.sortReverse| filter:users.searchFilter">
+            <td>{{user.name}}</td>
+            <td>{{user.surname}}</td>
+            <td>{{user.login}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.createDate | date:"MM/dd/yyyy"}}</td>
+            <td>{{user.enabled}}</td>
+            <td>
+                <button type="button" class="btn btn-danger" ng-click="users.deleteUser(user.id)">
+                    <i class="fa fa-times" aria-hidden="true"></i> Delete
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

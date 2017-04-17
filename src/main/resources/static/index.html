@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>Hello AngularJS</title>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="css/angular-bootstrap.css">
+    <script src="js/angular-bootstrap.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body class="bookstore" ng-app="hello" ng-cloak class="ng-cloak">
+<div ng-controller="navigation as nav">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <ul class="nav nav-pills" role="tablist">
+                <li ng-class="{active:nav.tab('home')}"><a href="#/">home</a></li>
+                <li ng-class="{active:nav.tab('navigation')}" ng-show="!authenticated"><a href="#/login">login</a></li>
+                <li ng-class="{active:nav.tab('navigation')}" ng-show="authenticated && isAdmin"><a
+                        href="#/users">users</a></li>
+                <li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div ng-view class="container"></div>
+
+<script src="js/hello.js"></script>
+
+</body>
+</html>

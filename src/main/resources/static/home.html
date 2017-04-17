@@ -1,0 +1,125 @@
+<div ng-if="authenticated" ng-controller="home as home">
+    <div class="forms">
+        <form ng-if="isAdmin" ng-submit="home.addBook()">
+            <div class="form-group">
+                <input required type="text" class="form-control" placeholder="Title" ng-model="home.newBook.title">
+                <input required type="text" class="form-control" placeholder="Description"
+                       ng-model="home.newBook.description">
+                <input required type="date" class="form-control" placeholder="Publication Date"
+                       ng-model="home.newBook.publicationDate">
+                <input required type="text" class="form-control" placeholder="Author" ng-model="home.newBook.author">
+
+                <button type="submit" class="btn btn-success">Add Book</button>
+            </div>
+        </form>
+    </div>
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+                <input type="text" class="form-control" placeholder="Search" ng-model="home.searchFilter">
+
+            </div>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>
+                <a href="#/" ng-click="home.sortType = 'title'; home.sortReverse = !home.sortReverse">
+                    Title
+                    <span ng-show="home.sortType == 'title' && !home.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="home.sortType == 'title' && home.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/" ng-click="home.sortType = 'description'; home.sortReverse = !home.sortReverse">
+                    Description
+                    <span ng-show="home.sortType == 'description' && !home.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="home.sortType == 'description' && home.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/" ng-click="home.sortType = 'publicationDate'; home.sortReverse = !home.sortReverse">
+                    Publication Date
+                    <span ng-show="home.sortType == 'publicationDate' && !home.sortReverse"
+                          class="fa fa-caret-down"></span>
+                    <span ng-show="home.sortType == 'publicationDate' && home.sortReverse"
+                          class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/" ng-click="home.sortType = 'author'; home.sortReverse = !home.sortReverse">
+                    Author
+                    <span ng-show="home.sortType == 'author' && !home.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="home.sortType == 'author' && home.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#/" ng-click="home.sortType = 'borrower'; home.sortReverse = !home.sortReverse">
+                    Borrower
+                    <span ng-show="home.sortType == 'borrower' && !home.sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="home.sortType == 'borrower' && home.sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                Options
+            </td>
+        </tr>
+        </thead>
+        <tr ng-repeat="book in home.books | orderBy:home.sortType:home.sortReverse| filter:home.searchFilter">
+            <td>{{book.title}}</td>
+            <td>{{book.description}}</td>
+            <td>{{book.publicationDate | date:"MM/dd/yyyy"}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.borrower.name + " " + book.borrower.surname}}</td>
+            <td>
+
+                <button ng-if="book.status === 0" type="button" class="btn btn-info"
+                        ng-click="home.borrowBook(book.id, 1)">
+                    <i class="fa fa-play" aria-hidden="true"></i> Borrow Book
+                </button>
+                <button ng-if="book.status === 1 && book.borrower.login === userLogin" type="button"
+                        class="btn btn-danger" ng-click="home.borrowBook(book.id, 0)">
+                    <i class="fa fa-undo" aria-hidden="true"></i> Return Book
+                </button>
+
+                <button ng-if="isAdmin" type="button" class="btn btn-danger" ng-click="home.deleteBook(book.id)">
+                    <i class="fa fa-times" aria-hidden="true"></i> Delete
+                </button>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal{{book.id}}">
+                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal{{book.id}}" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{{book.title}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                Title: <p>{{book.title}}</p>
+                                Description: <p>{{book.description}}</p>
+                                Publication Date: <p>{{book.publicationDate | date:"MM/dd/yyyy"}}</p>
+                                Author: <p>{{book.author}}</p>
+                                Borrower: <p>{{book.borrower.name + " " + book.borrower.surname}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div ng-show="!authenticated">
+    <h1>Witaj</h1>
+    <p>Zaloguj się, aby zobaczyć ksiażki!</p>
+</div>

@@ -1,6 +1,6 @@
 body {
-    background-color: #262626;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
 }
 
 nav.navbar {
@@ -52,24 +52,29 @@ body.bookstore table thead a.hover {
     text-decoration: none;
 }
 
+body.bookstore .forms .form-control {
+    margin-bottom: 4px;
+}
+
 body.bookstore .form-control {
     background-color: #70747A;
     border: none;
     color: #fff;
+
 }
 
 .form-control::-webkit-input-placeholder {
-    color: #515B6A;
+    color: #fff;
 }
 
 .form-control:-moz-placeholder {
-    color: #515B6A;
+    color: #fff;
 }
 
 .form-control::-moz-placeholder {
-    color: #515B6A;
+    color: #fff;
 }
 
 .form-control:-ms-input-placeholder {
-    color: #515B6A;
+    color: #fff;
 }

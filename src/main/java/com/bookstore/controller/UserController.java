@@ -6,6 +6,8 @@ import com.bookstore.repository.BookRepository;
 import com.bookstore.repository.RoleRepository;
 import com.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     UserController(UserRepository userRepository,
@@ -39,8 +41,9 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    List<User> getUsers() {
-        return this.userRepository.findAll();
+    ResponseEntity getUsers() {
+        List<User> users = this.userRepository.findAll();
+        return new ResponseEntity(users, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)

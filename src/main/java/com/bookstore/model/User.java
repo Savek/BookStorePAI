@@ -38,9 +38,16 @@ public class User {
     private Date createDate;
 
     @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    public static class UserBuilder {
-
+    public User(String name, String surname, String login, String password, String email, Boolean enabled, Role role) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.enabled = enabled;
+        this.role = role;
     }
 }

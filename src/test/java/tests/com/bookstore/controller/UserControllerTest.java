@@ -14,8 +14,11 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -58,11 +61,29 @@ public class UserControllerTest {
     }
 
     @Test
+    @Rollback
+    @WithMockUser(roles="ADMIN")
     public void user() throws Exception {
+        Role roleUser = roleRepository.findOne(Role.RoleName.ROLE_MEMBER.getId());
+        User first = new User("name1", "surname1", "login1", "pass", "email1@email.com", true, roleUser);
+        first.setId(1L);
 
+        when(userRepository.findById(1L)).thenReturn(first);
+
+        mockMvc.perform(get("/users/{id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("id", is(1)))
+                .andExpect(jsonPath("name", is("name1")))
+                .andExpect(jsonPath("surname", is("surname1")))
+                .andExpect(jsonPath("login", is("login1")))
+                .andExpect(jsonPath("password", is("pass")))
+                .andExpect(jsonPath("email", is("email1@email.com")))
+                .andExpect(jsonPath("enabled", is(true)));
     }
 
     @Test
+    @WithMockUser(roles="ADMIN")
     public void getUsers() throws Exception {
 
         Role roleUser = roleRepository.findOne(Role.RoleName.ROLE_MEMBER.getId());

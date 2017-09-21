@@ -41,6 +41,8 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
+    public User() {}
+
     public User(String name, String surname, String login, String password, String email, Boolean enabled, Role role) {
         this.name = name;
         this.surname = surname;

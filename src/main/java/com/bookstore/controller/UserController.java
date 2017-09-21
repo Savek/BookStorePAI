@@ -1,8 +1,6 @@
 package com.bookstore.controller;
 
-import com.bookstore.model.Book;
 import com.bookstore.model.User;
-import com.bookstore.repository.BookRepository;
 import com.bookstore.repository.RoleRepository;
 import com.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -33,17 +30,18 @@ public class UserController {
         this.roleRepository = roleRepository;
     }
 
-    @RequestMapping("/user")
+    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     @ResponseBody
-    public Principal user(Principal user) {
-        return user;
+    public ResponseEntity<User> user(@PathVariable Long userId) {
+        User user = userRepository.findById(userId);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    ResponseEntity getUsers() {
-        List<User> users = this.userRepository.findAll();
-        return new ResponseEntity(users, HttpStatus.OK);
+    ResponseEntity<List<User>> getUsers() {
+        List<User> users = userRepository.findAll();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -53,11 +51,11 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         input.setPassword(passwordEncoder.encode(input.getPassword()));
 
-        this.userRepository.save(input);
+        userRepository.save(input);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
     void delete(@PathVariable Long userId) {
-        this.userRepository.delete(userId);
+        userRepository.delete(userId);
     }
 }

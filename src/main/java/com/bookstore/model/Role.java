@@ -1,5 +1,7 @@
 package com.bookstore.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -7,6 +9,7 @@ import javax.validation.constraints.NotNull;
  * Created by Savek on 2017-04-16.
  */
 @Entity
+@Data
 public class Role {
 
     @Id
@@ -14,20 +17,4 @@ public class Role {
     private long id;
     @NotNull
     String role;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
